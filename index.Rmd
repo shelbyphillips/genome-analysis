@@ -1,0 +1,10 @@
+---
+title: "index"
+author: "Shelby Phillips"
+date: "2/26/2020"
+output: html_document
+---
+
+This is my web site!
+*[This is my test for lab 6](test.html)
+

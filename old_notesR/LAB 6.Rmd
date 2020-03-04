@@ -3,5 +3,27 @@ title: "LAB 6"
 author: "Shelby Phillips"
 date: "2/26/2020"
 output: html_document
+references: data/references.bib
 ---
+
+This is my web site!
+
+*[This is my test for lab 6](test.html)
+
+*[Lab 3 practice + exercises](old_notesR/Lab-3.html)
+
+*[Missing lab 4 because couldn't knit into HTML, here is Professor Blanchard's lab 4 html](Blanchard lab guide/Human Genome Analysis Lab 4 _ Publication Graphics.html)
+
+*[Lab 5 practice + exercises](old_notesR/LAB_5.html)
+
+*[Lab 6 (is this index file)](index.html)
+
+# REFERENCES
+*[references](data/references.bib)
+
+
+
+
+
+
 

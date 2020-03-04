@@ -1,0 +1,320 @@
+---
+title: "LAB_5"
+author: "Shelby Phillips"
+date: "2/19/2020"
+output: html_document
+---
+
+```{r}
+setwd("~/Human Genome Analysis")
+```
+
+``` {r, eval=FALSE}
+download.file(url="https://ndownloader.figshare.com/files/2292169",
+              destfile = "data/portal_data_joined.csv")
+```
+```{r, eval=FALSE}
+library(tidyverse)
+surveys <- read_csv("data/portal_data_joined.csv")
+```
+```{r}
+library(tidyverse)
+SNPs <- read_tsv("data/23andMe_complete.txt", skip = 14, col_types = 
+  cols(chromosome = col_factor()))
+```
+
+```{r}
+library(dplyr)
+library(tidyverse)
+surveys <- read_csv("data/portal_data_joined.csv")
+str(surveys)
+view(surveys)
+```
+
+# Selecting columns
+
+```{r}
+select(surveys, plot_id, species_id, weight)
+```
+
+# excluding columns
+
+```{r}
+select(surveys, -record_id, -species_id)
+```
+
+#filter data by year
+
+```{r}
+filter(surveys, year == 1995)
+```
+
+# Pipes
+
+```{r}
+surveys2 <- filter(surveys, weight < 5)
+surveys_sml <- select(surveys2, species_id, sex, weight)
+```
+
+```{r}
+surveys_sml <- select(filter(surveys, weight < 5), species_id, sex, weight)
+```
+
+```{r}
+surveys %>%
+  filter(weight < 5) %>%
+  select(species_id, sex, weight)
+```
+```{r}
+surveys_sml <- surveys %>%
+  filter(weight < 5) %>%
+  select(species_id, sex, weight)
+surveys_sml
+```
+
+### Pipes Challenge
+
+```{r}
+surveys_sm2 <- surveys %>%
+  filter(year < 1995) %>%
+  select(year, sex, weight)
+surveys_sm2
+```
+
+# Mutate practice
+
+```{r}
+surveys %>%
+  mutate(weight_kg = weight / 1000)
+surveys %>%
+  mutate(weight_kg = weight / 1000,
+         weight_lb = weight_kg * 2.2)
+surveys %>%
+  mutate(weight_kg = weight / 1000) %>%
+  head()
+surveys %>%
+  filter(!is.na(weight)) %>%
+  mutate(weight_kg = weight / 1000) %>%
+  head()
+```
+
+### Mutate Challenge
+
+```{r}
+surveys_hindfoot_half <- surveys %>%
+    filter(!is.na(hindfoot_length)) %>%
+    mutate(hindfoot_half = hindfoot_length / 2) %>%
+    filter(hindfoot_half < 30) %>%
+    select(species_id, hindfoot_half)
+head(surveys_hindfoot_half)
+```
+
+### Split-apply-combine data analysis and the summarize() function practice
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  summarize(mean_weight = mean(weight, na.rm = TRUE))
+```
+```{r}
+surveys_sex_speciesid <- surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight, na.rm = TRUE))
+surveys_sex_speciesid
+head(surveys_sex_speciesid, n=5)
+tail(surveys_sex_speciesid, n=5)
+```
+```{r}
+surveys_mean_weight <- surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight))
+surveys_mean_weight
+head(surveys_mean_weight, n=5)
+tail(surveys_mean_weight, n=5)
+```
+```{r}
+surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight)) %>%
+  print(n = 15)
+```
+```{r}
+surveys_min <- surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight),
+            min_weight = min(weight))
+surveys_min
+head(surveys_min)
+```
+```{r}
+surveys_arrange_min <- surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight),
+            min_weight = min(weight)) %>%
+  arrange(min_weight)
+surveys_arrange_min
+head(surveys_arrange_min)
+```
+```{r}
+arrange_min_desc <- surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight),
+            min_weight = min(weight)) %>%
+  arrange(desc(mean_weight))
+arrange_min_desc
+head(arrange_min_desc)
+```
+```{r}
+surveys %>%
+    count(sex) 
+```
+```{r}
+surveys %>%
+    group_by(sex) %>%
+    summarise(count = n())
+```
+```{r}
+surveys %>%
+    count(sex, sort = TRUE) 
+```
+```{r}
+surveys_count <- surveys %>%
+  count(sex, species)
+surveys_count
+head(surveys_count)
+```
+```{r}
+surveys_count_2 <- surveys %>%
+  count(sex, species) %>%
+  arrange(species, desc(n))
+surveys_count_2
+head(surveys_count_2)
+```
+
+### split-apply-combine challenge
+
+```{r}
+surveys %>%
+    count(plot_type) 
+```
+```{r}
+surveys_challenge <- surveys %>%
+    filter(!is.na(hindfoot_length)) %>%
+    group_by(species_id) %>%
+    summarize(
+        mean_hindfoot_length = mean(hindfoot_length),
+        min_hindfoot_length = min(hindfoot_length),
+        max_hindfoot_length = max(hindfoot_length),
+        n = n())
+surveys_challenge
+head(surveys_challenge)
+```
+```{r}
+surveys_challenge_ <- surveys %>%
+    filter(!is.na(weight)) %>%
+    group_by(year) %>%
+    filter(weight == max(weight)) %>%
+    select(year, genus, species, weight) %>%
+    arrange(year)
+surveys_challenge_
+head(surveys_challenge_)
+```
+
+```{r}
+library (tidyverse)
+```
+
+```{r}
+SNPs <- read_tsv("data/23andMe_complete.txt", skip = 14, col_types = 
+  cols(chromosome = col_factor()))
+```
+
+### Exercise 1
+
+```{r}
+select(SNPs, position, genotype)
+head(select(SNPs, position, genotype), n=10)
+```
+
+### Exercise 2
+
+```{r}
+chromosome_genotype <- select(SNPs, chromosome, genotype)
+chromosome_genotype
+head(chromosome_genotype, n=10)
+```
+```{r}
+MT_genotype <- filter(chromosome_genotype, chromosome == 'MT')
+MT_genotype
+head(MT_genotype, n=10)
+```
+```{r, eval=FALSE}
+library(dplyr)
+```
+
+```{r}
+SNPs_MT <- select(filter(SNPs, chromosome == 'MT'), chromosome, genotype)
+SNPs_MT
+```
+
+```{r}
+SNPs_MT_no_A_T <- SNPs %>% 
+  filter(chromosome == "MT") %>%
+  filter(genotype!="A") %>% 
+  filter(genotype!="T")
+SNPs_MT_no_A_T
+head(SNPs_MT_no_A_T, n=10)
+```
+
+
+### Exercise 3 
+
+```{r}
+position_SNPs <- SNPs %>% 
+  group_by(chromosome) %>% 
+  summarize(min_position = min(position), max_position = max(position), total_position = sum(position))
+position_SNPs
+```
+
+### Exercise 4 
+
+```{r}
+density_SNPs <- SNPs %>%
+  group_by(chromosome) %>% 
+  summarize(min_position = min(position), max_position = max(position), total_position = sum(position)) %>%
+  mutate(density_of_SNPs = total_position / (max_position - min_position))
+density_SNPs
+```
+
+### Exercise 5 
+
+```{r}
+density_SNPs <- SNPs %>%
+  group_by(chromosome) %>% 
+  summarize(min_position = min(position), max_position = max(position), total_position = sum(position)) %>%
+  mutate(density_of_SNPs = total_position / (max_position - min_position)) %>%
+  arrange(density_of_SNPs)
+density_SNPs
+```
+
+```{r}
+density_SNPs <- SNPs %>%
+  group_by(chromosome) %>% 
+  summarize(min_position = min(position), max_position = max(position), total_position = sum(position)) %>%
+  mutate(density_of_SNPs = total_position / (max_position - min_position)) %>%
+  arrange(density_of_SNPs)
+density_SNPs
+write_csv(density_SNPs, path="data/density_SNPs.csv")
+```
+```{r, eval=FALSE}
+ download.file("density_SNPs",
+              destfile = "data/density_SNPs.csv")
+```
+
+# I have the CSV uploaded separately because I don't think I used the right code
+

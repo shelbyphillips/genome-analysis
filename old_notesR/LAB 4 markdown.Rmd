@@ -1,0 +1,46 @@
+---
+title: "LAB 4"
+author: "Shelby Phillips"
+date: "2/14/2020"
+output: html_document
+---
+
+# load libraries
+
+```{r}
+library(tidyverse)
+```
+
+# load files
+
+```{r}
+SNPs<- read.table("23andMe_complete.txt", header = TRUE, sep = "\t")
+```
+
+# to adjust figure size
+
+```{r, fig.width = 6, fig.height = 6}
+
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) + 
+  geom_bar(mapping = aes(x = genotype, fill = chromosome)) + 
+  coord_polar() +
+  ggtitle("Total SNPs for each genotype") +
+  ylab("Total number of SNPs") +
+  xlab("Genotype")
+```
+
+# graphic output
+
+```{r}
+pdf("SNP_example_plot.pdf", width=6, height=3)
+ggplot(data = SNPs)  + 
+  geom_bar(mapping = aes(x = genotype, fill = chromosome)) + 
+  coord_polar() +
+  ggtitle("Total SNPs for each genotype") +
+  ylab("Total number of SNPs") +
+  xlab("Genotype")
+print(qplot("SNP_examplw_plot.pdf"))
+dev.off()
+```
+

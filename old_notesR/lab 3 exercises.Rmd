@@ -1,0 +1,121 @@
+---
+title: "LAB 3 Exercises"
+author: "Shelby Phillips"
+date: "2/5/2020"
+output: html_document
+---
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+setwd("~/HumanGenomics/LAB 3")
+```
+```{r}
+SNPs<- read.table("23andMe_complete.txt", header = TRUE, sep = "\t")
+```
+
+
+```{r}
+str(SNPs)
+```
+```{r}
+class(SNPs)
+```
+
+```{r}
+typeof(SNPs)
+```
+```{r}
+str(SNPs)
+```
+```{r}
+summary(SNPs)
+```
+```{r}
+class(SNPs$genotype)
+```
+```{r}
+typeof(SNPs$genotype)
+```
+```{r}
+str(SNPs$genotype)
+```
+```{r}
+summary(SNPs$genotype)
+```
+```{r}
+summary(SNPs$chromosome)
+```
+```{r}
+summary(SNPs$position)
+```
+```{r}
+summary(SNPs$chromosome)
+```
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+summary(SNPs$chromosome)
+```
+## Exercise 1
+### Using ggplot make a make a bar graph of the total SNP counts for each chromosome.
+```{r}
+data.frame(summary(SNPs$chromosome))
+```
+```{r}
+df <- data.frame(chromosome=c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "X", "Y", "MT"), SNPs=c("76909", "77346", "63285", "55017", "56019", "63245", "50965", "49215", "42969", "50322", "47972", "47125", "36078", "30818", "28400", "30167", "26688", "27971", "18533", "23834", "13404", "14100", "26007", "1766", "2459"), stringsAsFactors=FALSE)
+summary(df)
+str(df)
+```
+```{r}
+ggplot(data = df) + 
+  geom_bar(mapping = aes(x = chromosome, y = SNPs), stat="identity")
+```
+## Exercise 2
+### Order the chromosomes according to number by converting chromosomes from a factor to a order factor as in the example above. Then replot the bar graph
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) + 
+  geom_bar(mapping = aes(x = SNPs$chromosome))
+```
+## Exercise 3
+### Show the contribution of each genotype to the chromosome count using a stacked bar graph (with the fill = genotype)
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) + 
+  geom_bar(mapping = aes(x = chromosome, fill = genotype))
+```
+## Exercise 4
+### Make each set of stacked bars the same height to easier to compare proportions across groups.
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) + 
+  geom_bar(mapping = aes( x = chromosome, fill = genotype), position = "fill", color = "black")
+```
+## Exercise 5
+### Now place genotypes directly beside one another for each chromosome to compare individual values.
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) + 
+  geom_bar(mapping = aes( x = chromosome, fill = genotype), position = "dodge", color = "black")
+```
+## Exercise 6
+### The above graph is pretty hard to read. Try using facet_wrap with the genotype
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) + 
+  geom_bar(mapping = aes( x = chromosome, fill = chromosome), position = "dodge", color = "black") +
+  facet_wrap(~genotype)
+```
+## I think this is what you were looking to get as a result from exercise 6?
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) + 
+  geom_bar(mapping = aes( x = chromosome, fill = genotype), position = "dodge", color = "black") +
+  facet_wrap(~genotype)
+```

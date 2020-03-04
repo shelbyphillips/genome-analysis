@@ -3,7 +3,7 @@ title: "index"
 author: "Shelby Phillips"
 date: "2/26/2020"
 output: html_document
-references: data/references.bib
+bibliography: data/references.bib
 ---
 
 This is my web site!
@@ -18,8 +18,10 @@ This is my web site!
 
 *[Lab 6 (is this index file)](index.html)
 
+Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
+
 # REFERENCES
-*[references](data/references.bib)
+
 
 
 

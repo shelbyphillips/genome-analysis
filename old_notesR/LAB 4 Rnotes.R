@@ -7,7 +7,7 @@ output: html_document
   
   # load libraries
   
-  ```{r}
+```{r}
 library(tidyverse)
 ```
 
@@ -126,6 +126,7 @@ p + scale_fill_manual(values= mycolour)
 
 ```{r}
 SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ppi<- 300
 png("exercise_3.png", width=6*ppi, height=6*ppi, res=ppi)
 ggplot(data = SNPs) + 
   geom_bar(mapping = aes( x = chromosome, fill = genotype), position = "dodge", color = "black")

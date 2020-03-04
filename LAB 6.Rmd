@@ -1,9 +1,0 @@
----
-title: "LAB 6"
-author: "Shelby Phillips"
-date: "2/26/2020"
-output: html_document
----
-
-
-

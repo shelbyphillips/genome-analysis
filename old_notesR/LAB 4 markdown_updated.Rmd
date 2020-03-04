@@ -15,8 +15,7 @@ library(tidyverse)
 # load files
 
 ```{r}
-SNPs<- read.table("data/23andMe_example_cat25.txt", header = TRUE, sep = "\t")
-SNPs
+SNPs<- read.table("data/23andMe_complete.txt", header = TRUE, sep = "\t")
 head(SNPs, n=10)
 ```
 
@@ -64,7 +63,7 @@ dev.off()
 
 # interactive graphs
 
-```{r}
+```{r, eval=FALSE}
 install.packages("plotly")
 ```
 
@@ -82,7 +81,7 @@ ggplotly(
 ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
 geom_point())
 ```
-```{r}
+```{r, eval=FALSE}
 install.packages('DT')
 ```
 ```{r}
@@ -111,7 +110,7 @@ ab + ggtitle("SNPs in the human genome")
 
 ### Exercise 2 
 
-```{r, fig.width=10, fig.height=7}
+```{r, fig.width=20, fig.height=20}
 mycolour <-c("AC" = "BROWN", "AG" = "BROWN", "AT" = "BROWN", "CG" = "BROWN", "CT" = "BROWN", "GT" = "BROWN", "AA" = "BLUE", "CC" = "BLUE", "GG" = "BLUE", "TT" = "BLUE", "A" = "GREEN", "C" = "GREEN", "G" = "GREEN", "T" = "GREEN", "D" = "MAGENTA", "DD" = "MAGENTA", "DI" = "MAGENTA", "I" = "MAGENTA", "II" = "MAGENTA", "--" = "#999999")
 SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
 p <- ggplot(SNPs, aes(SNPs$chromosome, fill = genotype))+
@@ -122,9 +121,9 @@ p <- ggplot(SNPs, aes(SNPs$chromosome, fill = genotype))+
 p + scale_fill_manual(values= mycolour)
 ```
 
-### Exercise 3 FIIIIIIIIIIXXXXXX!!!!!!!!!!!!!!!!!!!!!!!!
+### Exercise 3
 
-```{r}
+```{r, fig.width=100, fig.height=100}
 SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
 png("exercise_3.png", width=6*ppi, height=6*ppi, res=ppi)
 ggplot(data = SNPs) + 
@@ -135,24 +134,26 @@ dev.off()
 
 ### Exercise 4
 
-```{r}
+```{r, fig.width=20, fig.height=50}
 SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
 ad <- ggplot(data = SNPs) + 
   geom_bar(mapping = aes( x = chromosome, fill = chromosome), position = "dodge", color = "black") +
-  facet_wrap(~genotype, ncol = 2)
-ad
-ad + ggtitle("Genotype count per chromosome")
+  facet_wrap(~genotype, ncol = 1)
+ae <-ad + theme(axis.title.x = element_text(size=20),
+                axis.text.y  = element_text(size=20)
+)
+ae + ggtitle("Genotype count per chromosome")
 ```
 
-### Exercise 5 NOT WORKING
+### Exercise 5 
 
-```{r}
+```{r, fig.width=20, fig.height=20}
 library(plotly)
 ggplotly(
   ggplot(SNPs, aes(chromosome, fill = genotype)) + 
   geom_bar (position = "dodge") +
   facet_wrap(~genotype, ncol= 2) +
-  ggtitle("genotypes across chromosome"),
+  ggtitle("genotypes across chromosome") +
   ylab("genotype counts") +
   xlab("chromosome")
 )
@@ -162,7 +163,6 @@ ggplotly(
 
 ```{r}
 Chromosome_Y <- subset(SNPs, chromosome == "Y")
-Chromosome_Y
 head(Chromosome_Y, n=10)
 ```
 

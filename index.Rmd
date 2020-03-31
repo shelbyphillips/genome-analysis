@@ -6,7 +6,7 @@ output: html_document
 bibliography: data/references.bib
 ---
 
-Hello, This is my web site!
+This is my web site!
 
 
 *[Lab 3 practice + exercises](old_notesR/Lab-3.html)
@@ -16,6 +16,10 @@ Hello, This is my web site!
 *[Lab 5 practice + exercises](old_notesR/LAB_5.html)
 
 *[Lab 6 (this is the index file)](index.html)
+
+*[Lab 7](old_notesR/lab7.html)
+
+*[Lab 9](old_notesR/Lab9.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 

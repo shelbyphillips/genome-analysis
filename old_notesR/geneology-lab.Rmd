@@ -1,0 +1,23 @@
+---
+title: "Geneology Lab"
+author: "Shelby Phillips"
+date: "3/21/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+![My condensed family tree; my mom's side of the family is from portugal and I am not able to track them all down. My grandmother doesn't know how to spell her parents names so it may not be correct spellings either. I am not in contact with my dad's side of the family but obituary's helped me get this far since they are all from Massachusetts.](genome-analysis/images/family_tree_condensed.png)
+
+![My mom's side of the family tree](genome-analysis/images/family_tree_mom_1.png)
+
+![My mom's side of the family tree continued](genome-analysis/images/family_tree_mom_2.png)
+
+![My dad's side of the family tree](genome-analysis/images/family_tree_dad_1.png)
+
+![My dad's side of the family continued; my grandpa had a lot of siblngs](genome-analysis/images/family_tree_dad_2.png)
+
+![My great grandpa and grandma on my dad's side](genome-analysis/images/family_tree_dad_3.png)
+

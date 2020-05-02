@@ -23,6 +23,10 @@ This is my web site!
 
 *[Lab 10](old_notesR/Lab10.html)
 
+*[Working Command Line](old_notesR/working_command_line_new.html)
+
+********** My genealogy lab is not on here for privacy reasons ***********
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES
